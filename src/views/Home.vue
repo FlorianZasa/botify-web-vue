@@ -24,20 +24,18 @@ export default {
   methods: {
     remove_all_bots() {
       const cards = document.querySelectorAll('#card');
-
       cards.forEach(card => {
         card.remove();
       });
     },
     readBots() {
-      console.log("Inside read bots")
       this.botData = []
       db
       .onSnapshot((querySnapshot) => {
         this.remove_all_bots()
           querySnapshot.forEach((doc) => {
             this.botData.push({
-              id: doc.id,
+              id: doc.data().id,
               name: doc.data().name,
               last_state: doc.data().last_state,
               status: doc.data().status,
@@ -45,9 +43,6 @@ export default {
           });
           return this.botData
         })
-        // .catch((error) => {
-        //   console.log("Error getting documents: ", error);
-        // });
     }
   },
   beforeMount(){
