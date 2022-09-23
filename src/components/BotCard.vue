@@ -100,4 +100,16 @@ export default {
 .status {
   color: rgb(82, 82, 255)
 }
+
+
+/* If the screen size is 600px wide or less, hide the element */
+@media only screen and (max-width: 600px) {
+  #card {
+  width: 100%;
+  border-radius: 18px;
+  box-shadow: 10px 10px 5px gray;
+  
+}
+}
+
 </style>
