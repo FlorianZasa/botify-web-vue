@@ -1,6 +1,6 @@
 <template>
   
-  <div id="card" :class="is_active(data.last_state)" @click="open_modal(data.id)">
+  <div id="card" :class="is_active(data.last_state)" @click="open_details(data.id)">
     <div class="name">{{data.id}} / {{data.name}}</div>
     <div class="last_state">{{data.last_state}}</div>
     <div class="status">{{data.status}}</div>
@@ -60,9 +60,9 @@ export default {
       }
       
     },
-    open_modal(id) {
-      console.log("Coming soon!, " +id)
-    }
+    open_details(id) {
+      this.$router.push({ name: 'BotView', params: {id: id, all_data: this.data}})
+    },
   }
 }
 </script>

@@ -34,12 +34,9 @@ export default {
       .onSnapshot((querySnapshot) => {
         this.remove_all_bots()
           querySnapshot.forEach((doc) => {
-            this.botData.push({
-              id: doc.data().id,
-              name: doc.data().name,
-              last_state: doc.data().last_state,
-              status: doc.data().status,
-            });
+            this.botData.push(
+              doc.data()
+            );
           });
           return this.botData
         })
@@ -48,15 +45,6 @@ export default {
   beforeMount(){
     this.readBots()
  },
-  // watch: {
-  //   id: {
-  //     // call it upon creation too
-  //     immediate: true,
-  //     handler(id) {
-  //       this.$bind('bot', this.botData.doc(id))
-  //     },
-  //   },
-  // },
 }
 </script>
 <style scoped>
