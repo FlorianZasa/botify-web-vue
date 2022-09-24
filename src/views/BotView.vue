@@ -159,6 +159,10 @@ export default {
         color: rgb(255, 0, 0);
     }
 
+    #state {
+        color: rgb(82, 82, 255)
+    }
+
 
 
 
