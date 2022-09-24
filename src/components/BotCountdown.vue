@@ -37,7 +37,7 @@
 
 <style scoped>
 #circle {
-        width: 50%;
+        width: 80%;
         padding-left: 2%;
         padding-right: 2%;
         line-height: 40px;
@@ -45,7 +45,7 @@
         font-size: 20px;
         text-align: center;
         align-content: center;
-        background: rgb(255, 255, 255);
+        background-color: rgb(216, 225, 216);
         margin: 0 auto;
 }
 

@@ -9,7 +9,7 @@ const routes = [
     component: Home
   },
   {
-    path: '/bot/:id',
+    path: '/bot/:name',
     name: 'BotView',
     component: BotView,
     props: true

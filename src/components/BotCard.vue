@@ -1,12 +1,10 @@
 <template>
   
-  <div id="card" :class="is_active(data.last_state)" @click="open_details(data.id)">
-    <div class="name">{{data.id}} / {{data.name}}</div>
-    <div class="last_state">{{data.last_state}}</div>
-    <div class="status">{{data.status}}</div>
-    <Countdown :startTime="get_seconds(data.last_state)" :active="is_active(data.last_state)" />
-
-
+  <div id="card" :class="is_active(componentData.last_state)" @click="open_details(componentData.name)">
+    <div class="name">{{componentData.id}} / {{componentData.name}}</div>
+    <div class="last_state">{{componentData.last_state}}</div>
+    <div class="status">{{componentData.status}}</div>
+    <Countdown :startTime="get_seconds(componentData.last_state)" :active="is_active(componentData.last_state)" />
   </div>
 
 </template>
@@ -18,37 +16,42 @@ export default {
   name: 'HelloWorld',
   components: {
     Countdown,
-},
-  props: {
-    data: {
-      type: Object
-    } 
   },
-  methods: {
-    get_seconds(time) {
-      try {
-        var today = new Date();
-        const dt_sections= time.split(',');
-        const date_sections = dt_sections[0].split('.')
-        var day = date_sections[0].trim()
-        var month = date_sections[1].trim()
-        var year = date_sections[2].trim()
-        const time_sections = dt_sections[1].split(':');
-        var hour = time_sections[0].trim()
-        var minute = time_sections[1].trim()
-        var second = time_sections[2].trim()
-
-        // 01.01.2022, 00:00:00
-        var ls_dt = new Date(year, parseInt(month)-1, day, hour, minute, second, 0);
-
-        var dif = ls_dt.getTime() - today.getTime();
-        var seconds_dif = dif / 1000;
-        var seconds = Math.abs(Math.round(seconds_dif));
-        return seconds
-      } catch {
-        return 0
+  props: {
+      data: {
+        type: Object
+      } 
+    },
+    data() {
+      return {
+        componentData: this.data,
       }
     },
+    methods: {
+      get_seconds(time) {
+        try {
+          var today = new Date();
+          const dt_sections= time.split(',');
+          const date_sections = dt_sections[0].split('.')
+          var day = date_sections[0].trim()
+          var month = date_sections[1].trim()
+          var year = date_sections[2].trim()
+          const time_sections = dt_sections[1].split(':');
+          var hour = time_sections[0].trim()
+          var minute = time_sections[1].trim()
+          var second = time_sections[2].trim()
+
+          // 01.01.2022, 00:00:00
+          var ls_dt = new Date(year, parseInt(month)-1, day, hour, minute, second, 0);
+
+          var dif = ls_dt.getTime() - today.getTime();
+          var seconds_dif = dif / 1000;
+          var seconds = Math.abs(Math.round(seconds_dif));
+          return seconds
+          } catch {
+            return 0
+          }
+      },
 
     is_active(time) {
       var time_str = time
@@ -60,9 +63,19 @@ export default {
       }
       
     },
-    open_details(id) {
-      this.$router.push({ name: 'BotView', params: {id: id, all_data: this.data}})
+    open_details(name) {
+      this.$router.push({ name: 'BotView', params: {name: name}})
     },
+    reload() {
+      this.$root.$refs.Home.readBots();
+    }
+  },
+  watch: {
+    componentData: function (last_state){
+      if (last_state == 90) {
+        this.$forceUpdate();
+      }
+    }
   }
 }
 </script>
@@ -107,7 +120,7 @@ export default {
   #card {
   width: 100%;
   border-radius: 18px;
-  box-shadow: 10px 10px 5px gray;
+  box-shadow: 0px 0px 10px rgb(61, 61, 61);
   
 }
 }
