@@ -41,7 +41,7 @@
         padding-left: 2%;
         padding-right: 2%;
         line-height: 40px;
-        border-radius: 10%;
+        border-radius: 20px;
         font-size: 20px;
         text-align: center;
         align-content: center;

@@ -5,7 +5,7 @@
         <h2 :class="is_active(get_seconds(botData.last_state))">Vor {{counter}} SEK</h2>
     </div>
     <div class="botview-detail">
-        <table style="border-collapse: collapse; width: 100%;" border="1">
+        <table style="border-collapse: collapse; width: 100%;">
         <tbody>
             <tr>
                 <td class="header">Anzahl Neustarts:</td>
@@ -135,6 +135,7 @@ export default {
         flex-direction: row;
         align-items: center;
         justify-content: flex-start;
+        margin: 3%
     }
 
     .botview-header h2 {
@@ -149,6 +150,15 @@ export default {
 
     table {
         background-color: white;
+        border-radius: 18px;
+    }
+
+    table td {
+        padding: 1rem
+    }
+
+    .header {
+        font-weight: bold;
     }
 
     .active {

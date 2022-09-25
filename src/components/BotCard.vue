@@ -92,6 +92,11 @@ export default {
   
 }
 
+#card:hover {
+  border: solid rgb(8, 0, 157) 2px;
+  
+}
+
 .name, .last_state, .status {
   padding: 1rem;
 }
