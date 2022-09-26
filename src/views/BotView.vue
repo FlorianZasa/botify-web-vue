@@ -1,8 +1,8 @@
 <template>
     <div class="botview">
         <div class="botview-header">
-        <h1>Botview {{$route.params.name}}</h1>
-        <h2 :class="is_active(get_seconds(botData.last_state))">Vor {{counter}} SEK</h2>
+        <h2>Botview {{$route.params.name}}</h2>
+        <h3 :class="is_active(get_seconds(botData.last_state))">{{counter}} SEK</h3>
     </div>
     <div class="botview-detail">
         <table style="border-collapse: collapse; width: 100%;">
@@ -134,8 +134,9 @@ export default {
         display: flex;
         flex-direction: row;
         align-items: center;
-        justify-content: flex-start;
-        margin: 3%
+        justify-content: space-between;
+        margin-top: 3%;
+        margin-bottom: 3%
     }
 
     .botview-header h2 {
@@ -151,33 +152,36 @@ export default {
     table {
         background-color: white;
         border-radius: 18px;
+        width: 100%
     }
 
     table td {
-        padding: 1rem
+        padding: 2%;
+        width: 20%;
     }
 
     .header {
+        padding-right: 10%;
         font-weight: bold;
     }
 
     .active {
-        color: rgb(0, 239, 0);
+        color: #829460;
     }
 
     .inactive {
-        color: rgb(255, 0, 0);
+        color: #F96666;
     }
 
     #state {
-        color: rgb(82, 82, 255)
+        color: rgb(76, 92, 158)
     }
 
 
 
 
 
-    @media only screen and (max-width: 600px) {
+    @media only screen and (max-width: 1000px) {
         .botview {
         width: 95%;
         justify-content: center;

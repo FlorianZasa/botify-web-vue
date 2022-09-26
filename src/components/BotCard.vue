@@ -83,7 +83,7 @@ export default {
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
 #card {
-  width: 40%;
+  width: 20%;
   min-width: 150px;
   margin: 1em;
   padding: 1em;
@@ -92,21 +92,25 @@ export default {
   
 }
 
-#card:hover {
-  border: solid rgb(8, 0, 157) 2px;
-  
-}
-
 .name, .last_state, .status {
   padding: 1rem;
 }
 
 .active {
-  background: rgb(0, 239, 0);
+  background: #829460;
 }
 
+.active:hover {
+  background: #b9d18c;
+}
+
+
 .inactive {
-  background: rgb(255, 0, 0);
+  background: #F96666;
+}
+
+.inactive:hover {
+  background: #fa8787;
 }
 
 .name {
@@ -116,12 +120,12 @@ export default {
 
 
 .status {
-  color: rgb(82, 82, 255)
+  color: rgb(76, 92, 158)
 }
 
 
 /* If the screen size is 600px wide or less, hide the element */
-@media only screen and (max-width: 600px) {
+@media only screen and (max-width: 1000px) {
   #card {
   width: 100%;
   border-radius: 18px;

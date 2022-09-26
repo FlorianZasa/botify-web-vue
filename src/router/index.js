@@ -1,6 +1,7 @@
 import { createRouter, createWebHashHistory } from 'vue-router'
 import Home from '../views/Home.vue'
 import BotView from '../views/BotView'
+import AddBot from '../views/AddBot'
 
 const routes = [
   {
@@ -14,10 +15,16 @@ const routes = [
     component: BotView,
     props: true
   },
+  {
+    path: '/bot/add',
+    name: 'AddBot',
+    component: AddBot,
+  },
 ]
 
 const router = createRouter({
   history: createWebHashHistory(),
+  linkExactActiveClass: "active",
   routes
 })
 

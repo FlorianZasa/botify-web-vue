@@ -45,7 +45,7 @@
         font-size: 20px;
         text-align: center;
         align-content: center;
-        background-color: rgb(216, 225, 216);
+        background-color: #fff;
         margin: 0 auto;
 }
 
