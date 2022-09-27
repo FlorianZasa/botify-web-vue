@@ -50,7 +50,7 @@
 }
 
 .active {
-    color: rgb(23, 212, 23);
+    color: #829460;
 }
 .inactive {
     color: rgb(241, 0, 0);
