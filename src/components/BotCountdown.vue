@@ -22,7 +22,14 @@
                 setTimeout(() => {
                     this.timer += 1
                     this.countDownTimer()
+                    this.triggerReload()
                 }, 1000)
+            },
+            triggerReload() {
+                if (this.timer == 90) {
+                    console.log("trigger reload")
+                    this.$parent.reload()
+                }
             }
             
         },

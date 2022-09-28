@@ -70,13 +70,6 @@ export default {
       this.$parent.readBots()
     }
   },
-  watch: {
-    componentData: function (last_state){
-      if (last_state == 90) {
-        this.reload()
-      }
-    }
-  }
 }
 </script>
 
