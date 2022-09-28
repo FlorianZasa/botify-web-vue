@@ -1,7 +1,9 @@
 <template>
     <div class="container">
+        <div class="addbot-header">
             <h2 class="page-title">Füge einen Bot hinzu:</h2>
-    <div class="addbot-main container">
+        </div>
+    <div class="addbot-content container">
         <div class="form text-center">
             <div class="form-floating mb-4">
                 <input type="text" class="form-control" id="botName" placeholder="Name">
@@ -61,11 +63,20 @@
     opacity: 0;
     }
 
+    .addbot-header {
+        background-color: #EEEEEE;
+    padding: 1rem;
+    border-radius: 0px 0px 18px 18px;
+    }
+
     
-.addbot-main {
+.addbot-content {
     display: flex;
     align-items: center;
     justify-content: center;
+
+    margin-top: 5%;
+        margin-bottom: 5%
 }
 
     

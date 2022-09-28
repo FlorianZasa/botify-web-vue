@@ -1,7 +1,8 @@
 <template>
     <div class="container">
         <div class="botview">
-            <div class="page-title buttonGrup">
+            <div class="botview-header">
+                <div class="page-title buttonGrup">
                 <nav style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
                     <ol class="breadcrumb">
                         <li class="breadcrumb-item"><a href="#">Übersicht</a></li>
@@ -9,11 +10,13 @@
                     </ol>
                 </nav>
             </div>
-            <div class="botview-header">
-                <h2 class="page-title">Botview {{$route.params.name}}</h2>
+                <div class="botview-hdg">
+                    <h2 class="page-title">Botview {{$route.params.name}}</h2>
                 <h3 :class="is_active(get_seconds(botData.last_state))">{{counter}} SEK</h3>
-        </div>
-    <div class="botview-detail">
+                </div>
+                
+            </div>
+    <div class="botview-content">
         <table style="border-collapse: collapse; width: 100%;">
         <tbody>
             <tr>
@@ -140,18 +143,27 @@ export default {
     }
 
     .botview-header {
+        
+
+        background-color: #EEEEEE;
+        padding: 1rem;
+        border-radius: 0px 0px 18px 18px;
+    }
+
+    .botview-hdg {
         display: flex;
         flex-direction: row;
         align-items: center;
         justify-content: space-between;
-        margin-top: 3%;
-        margin-bottom: 3%
     }
 
-    .botview-detail {
+    .botview-content {
         display: flex;
         flex-direction: row;
         text-align: left;
+
+        margin-top: 5%;
+        margin-bottom: 5%
     }
 
     table {

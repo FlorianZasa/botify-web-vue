@@ -20,7 +20,7 @@
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     color: #2c2424;
-    background-color: #EEEEEE;
+    background-color: #fff;
     font-family: "Lucida Sans Typewriter", "Lucida Console", Monaco, "Bitstream Vera Sans Mono", monospace;
   }
 

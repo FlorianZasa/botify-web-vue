@@ -102,8 +102,14 @@ export default {
   }
 
   .home-filter {
-    margin: 20px;
+    padding: 20px;
     
+  }
+
+  .home-header {
+    background-color: #EEEEEE;
+    padding: 1rem;
+    border-radius: 0px 0px 18px 18px;
   }
 
   .home-filter button {
