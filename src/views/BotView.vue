@@ -39,7 +39,7 @@
             <tr>
                 <td class="header">Alle Fehler bisher:</td>
                 <td id="errors">
-                    <p v-for="err in botData.errors" :key="err"></p>
+                    <p v-for="err in botData.errors" :key="err.id">{{err}}</p>
                 </td>
             </tr>
             <tr>
