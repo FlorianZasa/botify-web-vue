@@ -1,28 +1,37 @@
 <template>
-    <div class="addbot-header">
-        <h2>Füge einen Bot hinzu:</h2>
+    <div class="container">
+            <h2 class="page-title">Füge einen Bot hinzu:</h2>
+    <div class="addbot-main container">
+        <div class="form text-center">
+            <div class="form-floating mb-4">
+                <input type="text" class="form-control" id="botName" placeholder="Name">
+                <label for="botName" class="form-label">Name</label>
+            </div>
+            <div class="form-floating mb-4">
+                <input type="text" class="form-control" id="botId" placeholder="FZ***">
+                <label for="botId" class="form-label">FZ***</label>
+            </div>
+            <div class="form-floating mb-4">
+                <textarea class="form-control textfield" placeholder="Dies ist eine Beschreibung..." id="floatingTextarea" style="height: 100px"></textarea>
+                <label for="floatingTextarea">Dies ist eine Beschreibung...</label>
+            </div>
+            <button type="button" class="form-button" @click="showMessageFunc()">Speichern</button>
+        </div>
     </div>
-    <div class="addbot-main">
-        <input type="text" id="name" name="name" class="textfield" placeholder="Name"><br>
-        <input type="text" id="id" name="id" class="textfield" placeholder="FZ***"><br>
-        <input type="text" id="description" name="description" class="textfield" placeholder="Dies ist eine Beschreibung"><br>
-        <button class="form-button" @click="showMessageFunc()">Speichern</button>
+    <div class="alert alert-danger alert-dismissible fade show" role="alert" v-if="showMessage">
+        <strong>Ups! </strong>Diese Funktion steht noch nicht zur Verfügung!
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close" @click="hideMessageFunc()"></button>
+    </div>
 
-    </div>
-    <div class="addbot-message-container" v-if="showMessage">
-        <Transition>
-            <message title="Ups..." message="Diese Aktion steht noch nicht zur Verfügung. Bitte wenden Sie sich an den Administrator" type="alert" @closed="hideMessageFunc()" />
-        </Transition>
-    </div>
+</div>
     
 </template>
 
 <script>
-    import Message from '../components/Message.vue'
 
     export default {
         name: 'AddBot',
-        components: {Message},
+        components: {},
         data() {
             return {
                 showMessage: false,
@@ -52,6 +61,12 @@
     opacity: 0;
     }
 
+    
+.addbot-main {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
 
     
     input.textfield  {
@@ -62,10 +77,13 @@
         margin: 1%
     }
 
+    .form {
+        margin-bottom: 50px;
+        width: 60%;
+    }
+
     .form-button {
-        margin: 5%;
-        width: 30%;
-        height: 3rem;
+        width: 20rem;
         background-color: #829460;
         color: #fff;
         font-size: 18px;
@@ -81,7 +99,7 @@
     @media only screen and (max-width: 1000px) {
         input.textfield  {
             width: 85%;
-            height: 3rem;
+            height: 2rem;
             border: none;
             border-radius: 18px;
             margin: 2%

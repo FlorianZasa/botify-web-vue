@@ -27,7 +27,6 @@
             },
             triggerReload() {
                 if (this.timer == 90) {
-                    console.log("trigger reload")
                     this.$parent.reload()
                 }
             }

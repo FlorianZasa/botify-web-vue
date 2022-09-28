@@ -1,9 +1,18 @@
 <template>
-    <div class="botview">
-        <div class="botview-header">
-        <h2>Botview {{$route.params.name}}</h2>
-        <h3 :class="is_active(get_seconds(botData.last_state))">{{counter}} SEK</h3>
-    </div>
+    <div class="container">
+        <div class="botview">
+            <div class="page-title buttonGrup">
+                <nav style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a href="#">Übersicht</a></li>
+                        <li class="breadcrumb-item active" aria-current="page">Botview {{$route.params.name}}</li>
+                    </ol>
+                </nav>
+            </div>
+            <div class="botview-header">
+                <h2 class="page-title">Botview {{$route.params.name}}</h2>
+                <h3 :class="is_active(get_seconds(botData.last_state))">{{counter}} SEK</h3>
+        </div>
     <div class="botview-detail">
         <table style="border-collapse: collapse; width: 100%;">
         <tbody>
@@ -29,7 +38,9 @@
             </tr>
             <tr>
                 <td class="header">Alle Fehler bisher:</td>
-                <td id="errors">{{botData.errors}}</td>
+                <td id="errors">
+                    <p v-for="err in botData.errors" :key="err"></p>
+                </td>
             </tr>
             <tr>
                 <td class="header">Mehr Infos</td>
@@ -38,6 +49,7 @@
         </tbody>
       </table> 
     </div>  
+    </div>
     </div>
 </template>
 
@@ -92,13 +104,11 @@ export default {
                 var seconds = Math.abs(Math.round(seconds_dif));
                 return seconds
                 } catch (ex) {
-                    console.log(ex)
                     return 0
                 }
         },
 
         is_active(seconds) {
-        console.log("SEK, " + seconds)
         if (seconds > 90) {
             return "inactive"
         } else {
@@ -124,10 +134,9 @@ export default {
 
 <style scoped>
 
-    .botview {
-        width: 60%;
-        justify-content: center;
-        margin: auto
+    .page-title {
+        margin-top: 20px;
+        margin-bottom: 20px;
     }
 
     .botview-header {
@@ -137,10 +146,6 @@ export default {
         justify-content: space-between;
         margin-top: 3%;
         margin-bottom: 3%
-    }
-
-    .botview-header h2 {
-        margin-left: 2rem
     }
 
     .botview-detail {

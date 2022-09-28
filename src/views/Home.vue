@@ -1,21 +1,23 @@
 <template>
-  <div class="home-wrapper">
+  <div class="container home-wrapper ">
     <div class="home-header">
-      <h2>Bot Übersicht:</h2>
+      <h2 class="page-title">Bot Übersicht:</h2>
       <div v-if="showFilter">
         <div class="toggle-filter-btn"
           @click="toggleFilter()">
-          &uarr; Filter
+          <i class="bi bi-caret-up-fill"></i>
+          Filter
         </div>
-        <div class="home-filter">
-          <input type="text" class="filter" placeholder="Filter hier...">
-        <button>Filter</button>
-        </div>
+        <div class="input-group mb-3 home-filter">
+          <input type="text" class="form-control" id="botId" placeholder="FZ***">
+        <button class="btn btn-outline-secondary" type="button">Filter</button>
+      </div>
       </div>
       <div v-else>
         <div class="toggle-filter-btn"
           @click="toggleFilter()">
-          &darr; Filter
+          <i class="bi bi-caret-down-fill"></i>
+          Filter          
         </div>
       </div>
       
@@ -100,11 +102,8 @@ export default {
   }
 
   .home-filter {
-    display: flex;
-    flex-direction: row;
-    align-content: center;
-    align-items: center;
-    justify-content: center;
+    margin: 20px;
+    
   }
 
   .home-filter button {
@@ -112,6 +111,10 @@ export default {
     background-color: #829460;
     color: #fff;
     border-radius: 18px;
+  }
+
+  .input-group {
+    align-items: center;
   }
 
   .toggle-filter-btn {

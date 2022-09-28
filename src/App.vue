@@ -1,9 +1,10 @@
 <template>
   <div id="nav">
-    <router-link to="/" class="router-link">Home</router-link> |
-    <router-link to="/bot/add" class="router-link">Hinzufügen</router-link>
+    <router-link to="/" class="router-link"><i class="bi bi-house-door-fill"></i> Home</router-link> |
+    <router-link to="/bot/add" class="router-link"><i class="bi bi-plus-square-fill"></i> Hinzufügen</router-link>
   </div>
-  <router-view />
+    <router-view />
+  
 </template>
 
 <script>
@@ -16,14 +17,11 @@
   }
 
   #app {
-    font-family: Avenir, Helvetica, Arial, sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
-    height: 100vh;
     color: #2c2424;
-    text-align: center;
     background-color: #EEEEEE;
-    font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    font-family: "Lucida Sans Typewriter", "Lucida Console", Monaco, "Bitstream Vera Sans Mono", monospace;
   }
 
 #nav {
@@ -40,6 +38,14 @@
 
 .router-link.active {
   border-bottom: solid 1px #fff
+}
+
+.page-title {
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+.logo {
+  font-size: 28px;
 }
 
 

@@ -76,12 +76,13 @@ export default {
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
 #card {
-  width: 20%;
+  width: 40%;
   min-width: 150px;
   margin: 1em;
   padding: 1em;
   border-radius: 18px;
   box-shadow: 0px 0px 10px rgb(188, 188, 188);
+  display: grid;
   
 }
 
