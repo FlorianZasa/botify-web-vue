@@ -67,13 +67,13 @@ export default {
       this.$router.push({ name: 'BotView', params: {name: name}})
     },
     reload() {
-      this.$root.$refs.Home.readBots();
+      this.$parent.readBots()
     }
   },
   watch: {
     componentData: function (last_state){
       if (last_state == 90) {
-        this.$forceUpdate();
+        this.reload()
       }
     }
   }
