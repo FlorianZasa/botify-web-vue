@@ -81,7 +81,7 @@ export default {
   margin: 1em;
   padding: 1em;
   border-radius: 18px;
-  box-shadow: 0px 0px 10px rgb(61, 61, 61);
+  box-shadow: 0px 0px 10px rgb(188, 188, 188);
   
 }
 
@@ -121,8 +121,6 @@ export default {
 @media only screen and (max-width: 1000px) {
   #card {
   width: 100%;
-  border-radius: 18px;
-  box-shadow: 0px 0px 10px rgb(61, 61, 61);
   
 }
 }
