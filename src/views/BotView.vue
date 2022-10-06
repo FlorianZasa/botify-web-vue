@@ -45,6 +45,7 @@
             <tr>
                 <td class="header">Alle Fehler bisher:</td>
                 <td id="errors">
+                {{botData.errors}}
                     <p v-for="err in botData.errors" :key="err"></p>
                 </td>
             </tr>
@@ -332,3 +333,5 @@ export default {
 
 
 </style>
+
+
