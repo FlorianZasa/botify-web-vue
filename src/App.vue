@@ -32,7 +32,7 @@
   }
 
 #nav {
-  padding: 2%;
+  padding: 20px;
   background: #674747;
   color: #EEEEEE;
 }

@@ -14,7 +14,10 @@
                     <h2 class="page-title">Botview {{$route.params.name}}</h2>
                 <h3 :class="is_active(get_seconds(botData.last_state))">{{counter}} SEK</h3>
                 </div>
-                
+            </div>
+            <div class="charts">
+                <apexchart type="pie" width="380" :options="pieChartOptions" :series="pieSeries" ref="piechart"></apexchart>
+                <apexchart width="380" type="line" :options="lineChartOptions" :series="series" ref="linechart"></apexchart>
             </div>
     <div class="botview-content">
         <table style="border-collapse: collapse; width: 100%;">
@@ -68,17 +71,83 @@ export default {
     data() {
         return {
             botData: {},
-            counter: 0
+            counter: 0,
+            startTime: 6,
+            
+            pieSeries: [100, 0],
+            pieChartOptions: {
+                chart: {
+                    width: 380,
+                    type: 'pie',
+                },
+                labels: ['Automatische Neustarts', 'Laufzeit'],
+                responsive: [{
+                breakpoint: 480,
+                options: {
+                    chart: {
+                    width: 200
+                    },
+                    legend: {
+                    position: 'bottom'
+                    }
+                }
+                }],
+            },
+            series: [{
+                name: "Ausfälle pro Stunde",
+                data: []
+            }],
+            lineChartOptions: {
+                chart: {
+                    type: 'area',
+                    height: 350,
+                    zoom: {
+                        enabled: false
+                    }
+                },
+                dataLabels: {
+                    enabled: false
+                },
+                stroke: {
+                    curve: 'smooth'
+                },
+                
+                title: {
+                    text: 'Ausfälle von ' + this.name,
+                    align: 'left'
+                },
+                subtitle: {
+                    text: 'pro Stunde',
+                    align: 'left'
+                },
+                labels: [],
+                xaxis: {
+                    type: 'string',
+                },
+                yaxis: {
+                    opposite: true
+                },
+                legend: {
+                    horizontalAlign: 'left'
+                }
+          },
         }
     },
     methods: {
         readBot() {
             try {
                 db
-            .doc(this.name)
-            .onSnapshot((snapshot) => {
+                .doc(this.name)
+                .onSnapshot((snapshot) => {
                 this.botData = snapshot.data()
                 this.counter = this.get_seconds(this.botData.last_state)
+
+                this.add_data_to_pie_serie()
+                this.add_data_to_line_serie()
+
+                
+                
+                
                 return this.botData
             });
  
@@ -86,6 +155,54 @@ export default {
                 return this.botData
             }
         },
+        total_to_percent(total) {
+            return ((870/total)*100)
+        },
+
+        get_error_per_hour(hours) {
+            let amount = 0
+            for(let i = 0; i < this.botData.errors.length; i++) {
+                let time = this.botData.errors[i].error_time
+                let hour = time.substring(0,2)
+                if (hour == hours) {
+                    amount += 1
+                }
+            }
+            return amount
+        },
+
+        get_now_hour(){
+            return new Date().getHours()  
+        },
+
+        add_data_to_line_serie() {
+            let lineData = []
+            let lineLabels = []
+
+            for(let time = this.startTime; time <= this.get_now_hour(); time++) {
+                if (time) {
+                    if (!lineLabels.includes(time)) {
+                        lineLabels.push(time + " Uhr")
+                    }
+                    lineData.push(this.get_error_per_hour(time))
+                } else {
+                    console.log("FEHLER BEI: " + time)
+                }        
+            }
+            this.series[0].data = lineData
+            this.lineChartOptions.labels = lineLabels
+
+            this.lineChartOptions = {
+                labels: lineLabels,
+            };
+
+        },
+
+        add_data_to_pie_serie() {
+            this.pieSeries[1] = this.total_to_percent(this.botData.automated_restarts)
+        },
+
+
         get_seconds(time) {
             try {
                 var today = new Date();
@@ -127,7 +244,7 @@ export default {
             }
     },
     created () {
-            this.countDownTimer()
+        this.countDownTimer()
     },
     beforeMount(){
         this.readBot()
@@ -143,8 +260,6 @@ export default {
     }
 
     .botview-header {
-        
-
         background-color: #EEEEEE;
         padding: 1rem;
         border-radius: 0px 0px 18px 18px;
@@ -194,16 +309,25 @@ export default {
         color: rgb(76, 92, 158)
     }
 
+    .charts {
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+        align-items:center;
+        justify-content: center;
+        padding-top: 20px;
+    }
+
 
 
 
 
     @media only screen and (max-width: 1000px) {
         .botview {
-        width: 95%;
-        justify-content: center;
-        margin: auto
-    }
+            width: 95%;
+            justify-content: center;
+            margin: auto
+        }
     }
 
 
