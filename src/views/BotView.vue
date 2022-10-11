@@ -6,7 +6,7 @@
                 <nav style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
                     <ol class="breadcrumb">
                         <li class="breadcrumb-item"><a href="#">Übersicht</a></li>
-                        <li class="breadcrumb-item active" aria-current="page">Botview {{$route.params.name}}</li>
+                        <li class="breadcrumb-item activated" aria-current="page">Botview {{$route.params.name}}</li>
                     </ol>
                 </nav>
             </div>
@@ -304,6 +304,10 @@ export default {
 
     .inactive {
         color: #F96666;
+    }
+    
+    .activated {
+        font-weight: bold;
     }
 
     #state {
