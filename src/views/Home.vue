@@ -63,7 +63,10 @@ export default {
               doc.data()
             );
           });
-          return this.botData
+          this.botData.sort()
+        return this.botData.reverse()
+
+        //   return this.botData
         })
     },
     toggleFilter() {

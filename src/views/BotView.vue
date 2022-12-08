@@ -16,42 +16,34 @@
                 </div>
             </div>
             <div class="charts">
-                <apexchart type="pie" width="380" :options="pieChartOptions" :series="pieSeries" ref="piechart"></apexchart>
-                <apexchart width="380" type="line" :options="lineChartOptions" :series="series" ref="linechart"></apexchart>
+                <BotStartLabelVue :started="botData.started" />
+                <apexchart width="380" type="bar" :options="lineChartOptions" :series="series" ref="linechart" class="chart"></apexchart>
+                <BotNeustartsLabelVue :restarts="botData.automated_restarts" />
             </div>
     <div class="botview-content">
         <table style="border-collapse: collapse; width: 100%;">
         <tbody>
             <tr>
-                <td class="header">Anzahl Neustarts:</td>
-                <td id="restarts">{{botData.automated_restarts}}</td>
-            </tr>
-            <tr>
-                <td class="header">Letzter Status:</td>
-                <td id="last_state" :class="is_active(get_seconds(botData.last_state))">{{botData.last_state}}</td>
-            </tr>
-            <tr>
                 <td class="header">Status:</td>
-                <td id="state">{{botData.status}}</td>
-            </tr>
-            <tr>
-                <td class="header">Log:</td>
-                <td id="log">{{botData.log}}</td>
-            </tr>
-            <tr>
-                <td class="header">Aktiv seit:</td>
-                <td id="time_active">{{botData.started}}</td>
+                <td id="table_content" :class="is_active(get_seconds(botData.last_state))">{{botData.last_state}}</td>
             </tr>
             <tr>
                 <td class="header">Alle Fehler bisher:</td>
-                <td id="errors">
-                {{botData.errors}}
-                    <p v-for="err in botData.errors" :key="err"></p>
+                <td id="table_content">    
+                    <apexchart width="300" type="pie" :options="pieChartOptions" :series="errorSeries" ref="piechart"></apexchart>
                 </td>
             </tr>
             <tr>
+                <td class="header">Status:</td>
+                <td id="table_content state" style="padding-left: 6rem">{{botData.status}}</td>
+            </tr>
+            <tr>
+                <td class="header">Log:</td>
+                <td id="table_content">{{botData.log}}</td>
+            </tr>
+            <tr>
                 <td class="header">Mehr Infos</td>
-                <td id="more">{{botData.description}}</td>
+                <td id="table_content">{{botData.description}}</td>
             </tr>
         </tbody>
       </table> 
@@ -63,30 +55,38 @@
 
 <script>
 import firebase from "../db";
+import BotStartLabelVue from "../components/BotStartLabel.vue";
+import BotNeustartsLabelVue from "../components/BotNeustartsLabel.vue";
 const db = firebase.collection("bots");
 export default {
     name: 'Botview',
     props: {
         name: String,
     },
+    components: {
+        BotStartLabelVue,
+        BotNeustartsLabelVue
+    },
     data() {
         return {
             botData: {},
             counter: 0,
             startTime: 6,
+            pieData: {},
             
-            pieSeries: [100, 0],
+            errorSeries: [],
+            
             pieChartOptions: {
                 chart: {
-                    width: 380,
+                    width: 400,
                     type: 'pie',
                 },
-                labels: ['Automatische Neustarts', 'Laufzeit'],
+                labels: [],
                 responsive: [{
-                breakpoint: 480,
+                breakpoint: 400,
                 options: {
                     chart: {
-                    width: 200
+                    width: 400
                     },
                     legend: {
                     position: 'bottom'
@@ -101,18 +101,14 @@ export default {
             lineChartOptions: {
                 chart: {
                     type: 'area',
-                    height: 350,
+                    height: 200,
                     zoom: {
                         enabled: false
                     }
                 },
                 dataLabels: {
-                    enabled: false
+                    enabled: true
                 },
-                stroke: {
-                    curve: 'smooth'
-                },
-                
                 title: {
                     text: 'Ausfälle von ' + this.name,
                     align: 'left'
@@ -130,7 +126,8 @@ export default {
                 },
                 legend: {
                     horizontalAlign: 'left'
-                }
+                },
+                colors: ['#F96666'],
           },
         }
     },
@@ -143,21 +140,14 @@ export default {
                 this.botData = snapshot.data()
                 this.counter = this.get_seconds(this.botData.last_state)
 
-                this.add_data_to_pie_serie()
                 this.add_data_to_line_serie()
-
-                
-                
-                
+                this.pieData = this.get_different_errors(this.botData.errors)
                 return this.botData
             });
  
             } catch {
                 return this.botData
             }
-        },
-        total_to_percent(total) {
-            return ((870/total)*100)
         },
 
         get_error_per_hour(hours) {
@@ -199,11 +189,24 @@ export default {
 
         },
 
-        add_data_to_pie_serie() {
-            this.pieSeries[1] = this.total_to_percent(this.botData.automated_restarts)
+        get_different_errors(error_dict_lst) {
+            var error_list = []
+            const counts = {};
+            for(var i = 0; i < error_dict_lst.length; i++) {
+                error_list.push(error_dict_lst[i]["error_msg"])
+            }
+
+            var error_set = new Set(error_list)
+            error_set = Array.from(error_set);
+
+            error_list.forEach(function (x) { counts[x] = (counts[x] || 0) + 1; });
+
+            for(var y =0; y <error_set.length; y++) {
+                this.errorSeries.push(counts[error_set[y]])
+                this.pieChartOptions.labels.push(error_set[y])
+            }
+            return counts
         },
-
-
         get_seconds(time) {
             try {
                 var today = new Date();
@@ -277,6 +280,7 @@ export default {
         display: flex;
         flex-direction: row;
         text-align: left;
+        overflow: scroll;
 
         margin-top: 5%;
         margin-bottom: 5%
@@ -296,8 +300,13 @@ export default {
     .header {
         padding-right: 10%;
         font-weight: bold;
+        position: absolute;
+        background: white;
     }
 
+    #table_content {
+        padding-left: 6rem;
+    }
     .active {
         color: #829460;
     }
@@ -317,6 +326,11 @@ export default {
         align-items:center;
         justify-content: center;
         padding-top: 20px;
+        gap: 2rem
+    }
+
+    .chart {
+        margin: 4rem;
     }
 
 
